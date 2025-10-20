@@ -40,7 +40,7 @@ gateway:
       ]
   fullnameOverride: api-gateway
   image:
-    repository: mytruong28022004/spring-petclinic-api-gateway
+    repository: springcommunity/spring-petclinic-api-gateway
     pullPolicy: Always
     tag: "3.4.1"
   service:

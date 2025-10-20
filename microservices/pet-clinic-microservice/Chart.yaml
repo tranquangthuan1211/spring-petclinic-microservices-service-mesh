@@ -36,8 +36,3 @@ dependencies:
     repository: "file://../service-common"
     alias: config
     condition: config.enabled
-  - name: service-common
-    version: 0.1.0
-    repository: "file://../service-common"
-    alias: discovery
-    condition: discovery.enabled
