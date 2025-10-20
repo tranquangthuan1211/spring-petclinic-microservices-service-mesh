@@ -33,8 +33,8 @@ gateway:
     - name: wait-for-dependencies
       image: busybox:1.28
       command: ['sh', '-c', 
-        'until wget -T 5 -qO- http://config-server:8888/actuator/health >/dev/null 2>&1 && wget -T 5 -qO- http://discovery-server:8761/actuator/health >/dev/null 2>&1; do 
-          echo "Waiting for config-server and discovery-server"; 
+        'until wget -T 5 -qO- http://config-server:8888/actuator/health >/dev/null 2>&1; do 
+          echo "Waiting for config-server"; 
           sleep 10; 
         done;'
       ]
@@ -96,8 +96,8 @@ customers:
     - name: wait-for-dependencies
       image: busybox:1.28
       command: ['sh', '-c', 
-        'until wget -T 5 -qO- http://config-server:8888/actuator/health >/dev/null 2>&1 && wget -T 5 -qO- http://discovery-server:8761/actuator/health >/dev/null 2>&1; do 
-          echo "Waiting for config-server and discovery-server"; 
+        'until wget -T 5 -qO- http://config-server:8888/actuator/health >/dev/null 2>&1; do 
+          echo "Waiting for config-server"; 
           sleep 10; 
         done;'
       ]
@@ -147,8 +147,8 @@ visits:
     - name: wait-for-dependencies
       image: busybox:1.28
       command: ['sh', '-c', 
-        'until wget -T 5 -qO- http://config-server:8888/actuator/health >/dev/null 2>&1 && wget -T 5 -qO- http://discovery-server:8761/actuator/health >/dev/null 2>&1; do 
-          echo "Waiting for config-server and discovery-server"; 
+        'until wget -T 5 -qO- http://config-server:8888/actuator/health >/dev/null 2>&1; do 
+          echo "Waiting for config-server"; 
           sleep 10; 
         done;'
       ]
@@ -201,8 +201,8 @@ vets:
     - name: wait-for-dependencies
       image: busybox:1.28
       command: ['sh', '-c', 
-        'until wget -T 5 -qO- http://config-server:8888/actuator/health >/dev/null 2>&1 && wget -T 5 -qO- http://discovery-server:8761/actuator/health >/dev/null 2>&1; do 
-          echo "Waiting for config-server and discovery-server"; 
+        'until wget -T 5 -qO- http://config-server:8888/actuator/health >/dev/null 2>&1; do 
+          echo "Waiting for config-server"; 
           sleep 10; 
         done;'
       ]
@@ -252,8 +252,8 @@ admin:
     - name: wait-for-dependencies
       image: busybox:1.28
       command: ['sh', '-c', 
-        'until wget -T 5 -qO- http://config-server:8888/actuator/health >/dev/null 2>&1 && wget -T 5 -qO- http://discovery-server:8761/actuator/health >/dev/null 2>&1; do 
-          echo "Waiting for config-server and discovery-server"; 
+        'until wget -T 5 -qO- http://config-server:8888/actuator/health >/dev/null 2>&1; do 
+          echo "Waiting for config-server"; 
           sleep 10; 
         done;'
       ]
