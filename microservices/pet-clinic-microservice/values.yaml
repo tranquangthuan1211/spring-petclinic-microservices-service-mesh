@@ -1,0 +1,325 @@
+gateway:
+  enabled: true
+  replicaCount: 1
+  podAnnotations:
+    helm.sh/hook-weight: "10"
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 100m
+      memory: 256Mi
+  livenessProbe:
+    httpGet:
+      path: /actuator/health
+      port: 8080
+    initialDelaySeconds: 120
+    periodSeconds: 30
+    failureThreshold: 3
+  readinessProbe:
+    httpGet:
+      path: /actuator/health
+      port: 8080
+    initialDelaySeconds: 90
+    periodSeconds: 10
+  startupProbe:
+    httpGet:
+      path: /actuator/health
+      port: 8080
+    failureThreshold: 30
+    periodSeconds: 10
+  initContainers:
+    - name: wait-for-dependencies
+      image: busybox:1.28
+      command: ['sh', '-c', 
+        'until wget -T 5 -qO- http://config-server:8888/actuator/health >/dev/null 2>&1 && wget -T 5 -qO- http://discovery-server:8761/actuator/health >/dev/null 2>&1; do 
+          echo "Waiting for config-server and discovery-server"; 
+          sleep 10; 
+        done;'
+      ]
+  fullnameOverride: api-gateway
+  image:
+    repository: mytruong28022004/spring-petclinic-api-gateway
+    pullPolicy: Always
+    tag: "3.4.1"
+  service:
+    type: ClusterIP
+    port: 8080
+  ingress:
+    enabled: false
+    className: "traefik"
+    annotations:
+      kubernetes.io/ingress.class: traefik
+    hosts:
+      - host: spring-pet-clinic.local
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+    tls: []
+  env:
+    - name: SPRING_ZIPKIN_BASE_URL
+      value: http://zipkin.observability.svc.cluster.local
+
+customers:
+  enabled: true
+  replicaCount: 1
+  podAnnotations:
+    helm.sh/hook-weight: "10"
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 100m
+      memory: 256Mi
+  livenessProbe:
+    httpGet:
+      path: /actuator/health
+      port: 8081
+    initialDelaySeconds: 120
+    periodSeconds: 30
+    failureThreshold: 3
+  readinessProbe:
+    httpGet:
+      path: /actuator/health
+      port: 8081
+    initialDelaySeconds: 90
+    periodSeconds: 10
+  startupProbe:
+    httpGet:
+      path: /actuator/health
+      port: 8081
+    failureThreshold: 30
+    periodSeconds: 10
+  initContainers:
+    - name: wait-for-dependencies
+      image: busybox:1.28
+      command: ['sh', '-c', 
+        'until wget -T 5 -qO- http://config-server:8888/actuator/health >/dev/null 2>&1 && wget -T 5 -qO- http://discovery-server:8761/actuator/health >/dev/null 2>&1; do 
+          echo "Waiting for config-server and discovery-server"; 
+          sleep 10; 
+        done;'
+      ]
+  fullnameOverride: customers-service
+  image:
+    repository: springcommunity/spring-petclinic-customers-service
+    pullPolicy: Always
+    tag: "3.4.1"
+  service:
+    type: ClusterIP
+    port: 8081
+  ingress:
+    enabled: false
+
+visits:
+  enabled: true
+  replicaCount: 1
+  podAnnotations:
+    helm.sh/hook-weight: "10"
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 100m
+      memory: 256Mi
+  livenessProbe:
+    httpGet:
+      path: /actuator/health
+      port: 8082
+    initialDelaySeconds: 120
+    periodSeconds: 30
+    failureThreshold: 3
+  readinessProbe:
+    httpGet:
+      path: /actuator/health
+      port: 8082
+    initialDelaySeconds: 90
+    periodSeconds: 10
+  startupProbe:
+    httpGet:
+      path: /actuator/health
+      port: 8082
+    failureThreshold: 30
+    periodSeconds: 10
+  initContainers:
+    - name: wait-for-dependencies
+      image: busybox:1.28
+      command: ['sh', '-c', 
+        'until wget -T 5 -qO- http://config-server:8888/actuator/health >/dev/null 2>&1 && wget -T 5 -qO- http://discovery-server:8761/actuator/health >/dev/null 2>&1; do 
+          echo "Waiting for config-server and discovery-server"; 
+          sleep 10; 
+        done;'
+      ]
+  fullnameOverride: visits-service
+  image:
+    repository: springcommunity/spring-petclinic-visits-service
+    pullPolicy: Always
+    tag: "3.4.1"
+  service:
+    type: ClusterIP
+    port: 8082
+  ingress:
+    enabled: false
+  env:
+    - name: SPRING_ZIPKIN_BASE_URL
+      value: http://zipkin.observability.svc.cluster.local
+
+vets:
+  enabled: true
+  replicaCount: 1
+  podAnnotations:
+    helm.sh/hook-weight: "10"
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 100m
+      memory: 256Mi
+  livenessProbe:
+    httpGet:
+      path: /actuator/health
+      port: 8083
+    initialDelaySeconds: 120
+    periodSeconds: 30
+    failureThreshold: 3
+  readinessProbe:
+    httpGet:
+      path: /actuator/health
+      port: 8083
+    initialDelaySeconds: 90
+    periodSeconds: 10
+  startupProbe:
+    httpGet:
+      path: /actuator/health
+      port: 8083
+    failureThreshold: 30
+    periodSeconds: 10
+  initContainers:
+    - name: wait-for-dependencies
+      image: busybox:1.28
+      command: ['sh', '-c', 
+        'until wget -T 5 -qO- http://config-server:8888/actuator/health >/dev/null 2>&1 && wget -T 5 -qO- http://discovery-server:8761/actuator/health >/dev/null 2>&1; do 
+          echo "Waiting for config-server and discovery-server"; 
+          sleep 10; 
+        done;'
+      ]
+  fullnameOverride: vets-service
+  image:
+    repository: springcommunity/spring-petclinic-vets-service
+    pullPolicy: Always
+    tag: "3.4.1"
+  service:
+    type: ClusterIP
+    port: 8083
+  ingress:
+    enabled: false
+
+admin:
+  enabled: true
+  replicaCount: 1
+  podAnnotations:
+    helm.sh/hook-weight: "15"
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 100m
+      memory: 256Mi
+  livenessProbe:
+    httpGet:
+      path: /actuator/health
+      port: 9090
+    initialDelaySeconds: 120
+    periodSeconds: 30
+    failureThreshold: 3
+  readinessProbe:
+    httpGet:
+      path: /actuator/health
+      port: 9090
+    initialDelaySeconds: 90
+    periodSeconds: 10
+  startupProbe:
+    httpGet:
+      path: /actuator/health
+      port: 9090
+    failureThreshold: 30
+    periodSeconds: 10
+  initContainers:
+    - name: wait-for-dependencies
+      image: busybox:1.28
+      command: ['sh', '-c', 
+        'until wget -T 5 -qO- http://config-server:8888/actuator/health >/dev/null 2>&1 && wget -T 5 -qO- http://discovery-server:8761/actuator/health >/dev/null 2>&1; do 
+          echo "Waiting for config-server and discovery-server"; 
+          sleep 10; 
+        done;'
+      ]
+  fullnameOverride: admin-server
+  image:
+    repository: springcommunity/spring-petclinic-admin-server
+    pullPolicy: Always
+    tag: "3.4.1"
+  service:
+    type: ClusterIP
+    port: 9090
+  ingress:
+    enabled: true
+    className: "traefik"
+    annotations:
+      kubernetes.io/ingress.class: traefik
+    hosts:
+      - host: spring-pet-clinic-admin.local
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+    tls: []
+
+config:
+  enabled: true
+  replicaCount: 1
+  podAnnotations:
+    helm.sh/hook-weight: "-10"
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 100m
+      memory: 256Mi
+  livenessProbe:
+    httpGet:
+      path: /actuator/health
+      port: 8888
+    initialDelaySeconds: 60
+    periodSeconds: 30
+    failureThreshold: 3
+  readinessProbe:
+    httpGet:
+      path: /actuator/health
+      port: 8888
+    initialDelaySeconds: 30
+    periodSeconds: 10
+  startupProbe:
+    httpGet:
+      path: /actuator/health
+      port: 8888
+    failureThreshold: 15
+    periodSeconds: 10
+  fullnameOverride: config-server
+  image:
+    repository: mytruong28022004/spring-petclinic-config-server
+    pullPolicy: Always
+    tag: "latest"
+  service:
+    type: ClusterIP
+    port: 8888
+  ingress:
+    enabled: false
+  env:
+    - name: EUREKA_INSTANCE_HOSTNAME
+      value: config-server
+    - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+      value: http://discovery-server:8761/eureka/
