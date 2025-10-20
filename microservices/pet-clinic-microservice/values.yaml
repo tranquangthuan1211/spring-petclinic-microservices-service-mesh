@@ -310,16 +310,11 @@ config:
     periodSeconds: 10
   fullnameOverride: config-server
   image:
-    repository: mytruong28022004/spring-petclinic-config-server
+    repository: springcommunity/spring-petclinic-config-server
     pullPolicy: Always
-    tag: "latest"
+    tag: "3.4.1"
   service:
     type: ClusterIP
     port: 8888
   ingress:
     enabled: false
-  env:
-    - name: EUREKA_INSTANCE_HOSTNAME
-      value: config-server
-    - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
-      value: http://discovery-server:8761/eureka/
