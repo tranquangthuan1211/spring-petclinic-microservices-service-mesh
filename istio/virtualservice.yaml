@@ -11,7 +11,7 @@ spec:
   http:
   - match:
     - uri:
-        prefix: /
+        prefix: /api-gateway
     route:
     - destination:
         host: api-gateway
@@ -19,7 +19,7 @@ spec:
           number: 8080
   - match:
     - uri:
-        prefix: /
+        prefix: /config-server
     route:
     - destination:
         host: config-server
@@ -27,7 +27,7 @@ spec:
           number: 8888
   - match:
     - uri:
-        prefix: /
+        prefix: /visits-service
     route:
     - destination:
         host: visits-service
@@ -35,7 +35,7 @@ spec:
           number: 8082
   - match:
     - uri:
-        prefix: /
+        prefix: /customers-service
     route:
     - destination:
         host: customers-service
