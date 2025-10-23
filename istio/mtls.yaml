@@ -2,7 +2,7 @@ apiVersion: security.istio.io/v1beta1
 kind: PeerAuthentication
 metadata:
   name: default
-  namespace: ecommerce
+  namespace: petclinic
 spec:
   mtls:
     mode: STRICT

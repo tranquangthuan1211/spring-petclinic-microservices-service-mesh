@@ -2,7 +2,7 @@ apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
 metadata:
   name: pet-clinic-gateway
-  namespace: ecommerce
+  namespace: petclinic
 spec:
   selector:
     istio: ingress
